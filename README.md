@@ -1,34 +1,51 @@
-# SAKIP RSUD M. Natsir
+# SAKIP RSUD M. Natsir — Sistem Akuntabilitas Kinerja Instansi Pemerintah
 
-Sistem akuntabilitas kinerja instansi pemerintah daerah: perencanaan, pengukuran, dan pelaporan kinerja dengan akses berbasis peran.
+> Sistem untuk menyusun, mengumpulkan, dan melaporkan dokumen akuntabilitas kinerja (SAKIP) RSUD Mohammad Natsir Solok: dokumen per jenis dan unit kerja, bukti dukung, alur verifikasi, serta ekspor laporan.
 
-## Kegunaan
+| | |
+|---|---|
+| Instansi | RSUD Mohammad Natsir Solok |
+| Peran saya | Pengembangan aplikasi dan dukungan operasional |
+| Status | Dipakai internal |
 
-- Menyusun dan memantau indikator kinerja.
-- Mengelola bukti dukung per kegiatan.
-- Mengekspor laporan ke Excel dan PDF.
+## Fitur utama
+
+- **Dokumen kinerja per unit kerja**: jenis dokumen dipetakan ke unit kerja yang wajib mengumpulkan.
+- **Alur kerja dokumen**: unggah, verifikasi, revisi, dan persetujuan.
+- **Bukti dukung (dakung)** per kegiatan dan indikator.
+- **Data pegawai** terkait unit kerja, termasuk STR/SIP tenaga kesehatan.
+- **Notifikasi** perubahan status dokumen.
+- **Import dan ekspor** Excel serta PDF.
+- Peran dan izin, log aktivitas lengkap.
+
+## Arsitektur
+
+```mermaid
+flowchart LR
+  U[Unit kerja] --> L[Laravel 11<br/>Blade + Vite + Tailwind]
+  V[Verifikator / pimpinan] --> L
+  L --> DB[(MySQL)]
+  L --> F[Penyimpanan berkas]
+  L --> X[Excel / PDF]
+```
+
+## Model data (ringkas)
+
+`employees` · `unit_kerja` · `jenis_dokumen` · `jenis_dokumen_unit_kerja` · `documents` (dengan status workflow) · `dakung` · `files` · `notifications` · `activity_log`
 
 ## Tech stack
 
 | Lapis | Teknologi |
 |---|---|
-| Framework | Laravel |
-| Hak akses | Berbasis peran (role-based) |
-| Ekspor | maatwebsite/excel, dompdf |
-| Tambahan | Laravel Sanctum, activity log |
+| Aplikasi | Laravel 11 (PHP 8.2), Blade, Vite |
+| UI | Tailwind CSS, Sass |
+| Auth | Laravel Sanctum, spatie/permission |
+| Laporan | DomPDF, Laravel Excel |
 | Data | MySQL |
+| Deploy | Docker Compose |
 
-## Alur singkat
+---
 
-1. Setiap unit mengisi target dan realisasi.
-2. Sistem menghitung capaian indikator.
-3. Pimpinan meninjau dan menyetujui.
-4. Laporan diekspor untuk kebutuhan evaluasi.
+> **Catatan kerahasiaan.** Kode sumber aplikasi ini private karena milik/dipakai instansi. Repo ini hanya menjelaskan konteks, fitur, arsitektur, dan peran saya. Tidak ada kode, data pegawai, data pasien, alamat server, maupun kredensial di sini.
 
-## Ringkasan
-
-| | |
-|---|---|
-| Status | Aktif dipakai internal |
-
-> Kode sumber tidak dipublikasikan. Repo ini hanya menjelaskan kegunaan, stack, dan alur kerja. Tidak ada data pengguna, data pasien, atau kredensial di sini.
+**Maizan Insani Akbar** · Software Engineer & System Analyst · [Portfolio](https://izanmaizan.vercel.app) · [LinkedIn](https://www.linkedin.com/in/izanmaizan/) · [GitHub](https://github.com/izanmaizan)
